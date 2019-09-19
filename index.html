@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <!-- Meta tags Obrigatórias -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+
+    <title>Olá, mundo!</title>
+  </head>
+  
+  <style>
+    .barra{
+      position: absolute;
+      z-index: 999;
+      background-color:black;
+      width: 30%;
+      height: 3em;
+    }
+  </style>
+  
+  <body>
+   <div class="row">
+      <button class="btn btn-primary" id="novo">NOvo</button>
+   </div>
+    
+
+
+    <!-- JavaScript (Opcional) -->
+    <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
+    <script src="jquery/jquery-3.3.1.slim.min.js" ></script>
+    <script src="popper/popper.min.js" ></script>
+    <script src="bootstrap/js/bootstrap.min.js" ></script>
+
+    <script>
+      
+      const dragBar=(dragMe)=>{
+        let dragX=0;
+        let dragY=0;
+
+        const dragStart=(e)=>{
+          dragX=e.pageX-dragMe.offsetLeft;
+          dragY=e.pageY-dragMe.offsetTop;
+          addEventListener('mousemove',dragMove);
+          addEventListener('mouseup',dragEnd);
+          
+        }
+
+        const dragMove=(e)=>{
+          dragMe.style.left=(e.pageX-dragX)+'px';
+          dragMe.style.top=(e.pageY-dragY)+'px';
+        }
+
+        const dragEnd=()=>{
+          removeEventListener('mousemove',dragMove);
+          removeEventListener('mouseup',dragEnd);
+        }
+
+        dragMe.addEventListener('mousedown',dragStart);
+      }
+    
+
+     
+      const newNotas=(id)=>{
+        let barra=document.createElement('div');
+        let conteudo=`<div >
+        <button class="btn btn-primary"
+         type="button"data-toggle="collapse"
+          data-target="#${id}"
+           aria-expanded="false"  >
+        @</button>
+     
+      </div>
+      <div class="collapse" id="${id}">
+          <div class="card card-body">
+            <div contenteditable="true" >
+
+            </div>
+          </div>
+      </div>`;
+        console.log(id)
+       barra.classList.add('barra');
+       const body=document.querySelector('body');
+
+        barra.innerHTML=conteudo;
+        dragBar(barra);
+        body.appendChild(barra);
+    
+      }
+      
+      const novo=document.getElementById('novo');
+      
+      let num=1;
+      novo.addEventListener('click',()=>{
+          num ++;
+          let id='id'+num
+        newNotas(id);
+        
+       
+      })
+
+    </script>
+
+
+
+
+  </body>
+
+
+
+</html>
